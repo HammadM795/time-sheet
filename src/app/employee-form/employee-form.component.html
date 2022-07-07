@@ -1,0 +1,110 @@
+<h1 class="text-center header fw-bold">Time Sheet</h1>
+<div class="card">
+    <div class="my-3 mx-3">
+        <div class="row">
+            <!--Employee Name Start-->
+            <div class="col-md-6">
+                <label>Employee Name</label>
+                <p-dropdown [options]="employee" [(ngModel)]="employee1" placeholder="Select a Project"
+                    optionLabel="name" [showClear]="true">
+                </p-dropdown>
+
+            </div>
+            <!--Employee Name End-->
+
+
+
+            <!--DatePicker Start-->
+            <div class="col-md-6">
+                <div class="row">
+                    <label for="icon">Date</label>
+                    <p-calendar [(ngModel)]="date1" inputId="icon" [showIcon]="true" (onSelect)="onBlurMethod($event)"
+                        placeholder="Select a Date">
+                    </p-calendar>
+                    <p class="day">{{day}}</p>
+                </div>
+            </div>
+        </div>
+        <!--DatePicker End-->
+
+
+
+        <div class="row">
+            <!--Projects Start-->
+            <div class="col-md-6">
+                <div class="mt-3">
+                    <label>Project</label>
+                    <p-dropdown [options]="project" [(ngModel)]="project1" placeholder="Select a Project"
+                        class="bg-dark" optionLabel="name" [showClear]="true"></p-dropdown>
+                </div>
+            </div>
+            <!--Projects End-->
+
+
+            <!--WorkType Start-->
+            <div class="col-md-6">
+                <div class="mt-3">
+                    <label>Work Type</label>
+                    <p-dropdown [options]="worktype" [(ngModel)]="worktype1" placeholder="Select a work type"
+                        optionLabel="name" [showClear]="true"></p-dropdown>
+                </div>
+            </div>
+            <!--Work Type End-->
+        </div>
+
+        <!--Assigned Task Start-->
+        <div class="col-md-12 mt-3">
+            <div class="row">
+                <label>Assigned Task</label>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <textarea type="text" rows="3" placeholder="Enter your task" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--Assigned Task End-->
+
+
+        <div class="row">
+            <!--Hours Spend Start-->
+            <div class="col-md-6 mt-3">
+                <label>Hours Spend</label>
+                <div class=" row">
+                    <div class="col">
+                        <input type="number" class="form-control" id="hours-spend">
+                    </div>
+                </div>
+            </div>
+            <!--Hours Spend End-->
+
+
+            <!--Status Start-->
+            <div class="col-md-6 mt-3">
+                <label>Status</label>
+                <p-dropdown [options]="status" [(ngModel)]="status1" placeholder="Select a work type" optionLabel="name"
+                    [showClear]="true" id="status"></p-dropdown>
+            </div>
+            <!--Status End-->
+        </div>
+
+
+        <!--Comments Starts-->
+        <div class="col-md-12 mt-3">
+            <label>Comments</label>
+            <div class=" row">
+                <div class="col">
+                    <textarea type="text" rows="3" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--Comments End-->
+
+
+    </div>
+    <div class="mx-3 mb-3 d-flex">
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success" (click)="addItem()"></button>
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger" (click)="reset()"></button>
+
+    </div>
+</div>
