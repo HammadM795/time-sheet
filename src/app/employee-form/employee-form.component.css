@@ -1,0 +1,177 @@
+.header {
+    color: white;
+    background-color: #206be4;
+    font-size: 4rem;
+    transition: .3s ease-in-out;
+    margin: 0%;
+    padding: 0.5rem;
+}
+
+.header:hover {
+    color: #002967;
+}
+
+label {
+    font-weight: 600;
+    color: #206be4;
+}
+
+input {
+    border-radius: 7px;
+    border-color: 1px solid #ced4da;
+    width: 100%;
+
+}
+
+textarea {
+    border-radius: 7px;
+    width: 100%;
+}
+
+.dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+    border: none;
+}
+
+.dropdown-toggle {
+    width: 100%;
+    text-align: left;
+    border-bottom: 2px solid #ced4da;
+    border-width: none;
+}
+
+.btn-danger {
+    margin-left: 15px;
+}
+
+.task:hover {
+    border-color: #0D6EFD;
+}
+
+#hours-spend {
+    height: 3.1rem;
+}
+
+
+.form-control {
+    border: 1px solid #ced4da;
+    padding: 10px;
+}
+
+.form-control:hover {
+    border-color: #0D6EFD;
+}
+
+:host ::ng-deep .p-dropdown {
+    width: 100%;
+}
+
+:host ::ng-deep .p-calendar {
+    width: 100%;
+}
+
+.day {
+    position: absolute;
+    top: 3.2rem;
+    left: 48.8rem;
+    color: #495057;
+}
+
+.p-datepicker-header {
+    background: #00398e;
+}
+
+.pi-chevron-left:before {
+    color: white;
+}
+
+.p-button-danger {
+    margin-left: 15px;
+}
+
+
+
+
+/* @media only screen and (min-width: 1813px) {
+    :host ::ng-deep .p-dropdown {
+        width: 108.3rem;
+    }
+} */
+
+/* @media only screen and (min-width: 1700px) {
+    .day {
+        left: 77.8rem;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+   .day {
+        left: 66.8rem;
+    }
+} */
+
+
+/* @media only screen and (max-width: 768px) {
+    .day {
+        left: 17rem;
+    }
+} */
+@media (max-width: 576px) {
+    .day {
+        top: 7.9rem;
+        left: 7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .day {
+        top: 7.9rem;
+        left: 7rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .day {
+        left: 32.2rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .day {
+        left: 38.2rem;
+    }
+}
+
+@media (min-width: 1300px) {
+    .day {
+        left: 48.8rem;
+        max-width: 30%;
+    }
+}
+
+
+
+/* @media (min-width: 576px){
+    .day {
+        top: 7.9rem;
+        left: 7rem;
+    }
+}
+@media (min-width: 768px){
+    .day {
+        left: 17rem;
+    }
+}
+
+@media (min-width: 992px){
+    .day {
+        left: 36rem;
+    }
+} */
+/* @media only screen and (min-device-width: 500px) {
+    .day {
+        top: 7.9rem;
+        left: 7rem;
+    }
+} */
