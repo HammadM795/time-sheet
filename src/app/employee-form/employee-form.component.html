@@ -1,110 +1,145 @@
-<h1 class="text-center header fw-bold">Time Sheet</h1>
-<div class="card">
-    <div class="my-3 mx-3">
-        <div class="row">
-            <!--Employee Name Start-->
-            <div class="col-md-6">
-                <label>Employee Name</label>
-                <p-dropdown [options]="employee" [(ngModel)]="employee1" placeholder="Select a Project"
-                    optionLabel="name" [showClear]="true">
-                </p-dropdown>
+<div class="container-fluid">
+  <h1 class="text-center header fw-bold">Time Sheet</h1>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="card border-0">
 
+        <div class="my-3 mx-3">
+          <div class="row">
+            <!--Employee Name Start-->
+            <div class="col-md-6 col-lg-6 col-xl-6">
+              <label>Employee <span class="text-danger">*</span></label>
+              <p-dropdown
+                [options]="employeeList"
+                [(ngModel)]="defaultEmployee"
+                optionLabel="title"
+                optionValue="id"
+              >
+              </p-dropdown>
             </div>
             <!--Employee Name End-->
-
-
-
             <!--DatePicker Start-->
-            <div class="col-md-6">
-                <div class="row">
-                    <label for="icon">Date</label>
-                    <p-calendar [(ngModel)]="date1" inputId="icon" [showIcon]="true" (onSelect)="onBlurMethod($event)"
-                        placeholder="Select a Date">
-                    </p-calendar>
-                    <p class="day">{{day}}</p>
-                </div>
+            <div class="col-md-3 col-lg-6 col-xl-6">
+              <div class="row">
+                <label for="icon">Date <span class="text-danger">*</span></label>
+                <p-calendar
+                  [(ngModel)]="obj.timeSheetDate"
+                  inputId="icon"
+                  [showIcon]="true"
+                  (onSelect)="onBlurMethod($event)"
+                  placeholder="Select a Date"
+                >
+                </p-calendar>
+              </div>
             </div>
-        </div>
-        <!--DatePicker End-->
+          </div>
+          <!--DatePicker End-->
 
-
-
-        <div class="row">
+          <div class="row">
             <!--Projects Start-->
-            <div class="col-md-6">
-                <div class="mt-3">
-                    <label>Project</label>
-                    <p-dropdown [options]="project" [(ngModel)]="project1" placeholder="Select a Project"
-                        class="bg-dark" optionLabel="name" [showClear]="true"></p-dropdown>
-                </div>
+            <div class="col-md-3 col-lg-6 col-xl-6">
+              <div class="mt-3">
+                <label>Project <span class="text-danger">*</span></label>
+                <p-dropdown
+                  [options]="projectList"
+                  [(ngModel)]="defaultProject"
+                  optionLabel="title"
+                  optionValue="id"
+                ></p-dropdown>
+              </div>
             </div>
             <!--Projects End-->
 
-
             <!--WorkType Start-->
-            <div class="col-md-6">
-                <div class="mt-3">
-                    <label>Work Type</label>
-                    <p-dropdown [options]="worktype" [(ngModel)]="worktype1" placeholder="Select a work type"
-                        optionLabel="name" [showClear]="true"></p-dropdown>
-                </div>
+            <div class="col-md-3 col-lg-6 col-xl-6">
+              <div class="mt-3">
+                <label>Work Type <span class="text-danger">*</span></label>
+                <p-dropdown
+                  [options]="workTypeList"
+                  [(ngModel)]="defaultWorType"
+                  optionLabel="title"
+                  optionValue="id"
+                ></p-dropdown>
+              </div>
             </div>
             <!--Work Type End-->
-        </div>
+          </div>
 
-        <!--Assigned Task Start-->
-        <div class="col-md-12 mt-3">
+          <!--Assigned Task Start-->
+          <div class="col-md-6 col-lg-12 col-xl-12 mt-3">
             <div class="row">
-                <label>Assigned Task</label>
+              <label>Assigned Task <span class="text-danger">*</span></label>
             </div>
             <div class="row">
-                <div class="col">
-                    <textarea type="text" rows="3" placeholder="Enter your task" class="form-control"></textarea>
-                </div>
+              <div class="col">
+                <textarea
+                  type="text"
+                  rows="3"
+                  placeholder="Enter your task"
+                  class="form-control"
+                  [(ngModel)]="obj.assignedTask"
+                ></textarea>
+              </div>
             </div>
-        </div>
-        <!--Assigned Task End-->
+          </div>
+          <!--Assigned Task End-->
 
-
-        <div class="row">
+          <div class="row">
             <!--Hours Spend Start-->
-            <div class="col-md-6 mt-3">
-                <label>Hours Spend</label>
-                <div class=" row">
-                    <div class="col">
-                    </div>
-                </div>
+            <div class="col-md-3 col-lg-6 col-xl-6 mt-3">
+              <label>Hours Spent <span class="text-danger">*</span></label>
+              <p-inputNumber
+                pStyleClass="d-block"
+                [(ngModel)]="obj.houseSpent"
+                mode="decimal"
+                [minFractionDigits]="2"
+              >
+              </p-inputNumber>
             </div>
             <!--Hours Spend End-->
 
-
             <!--Status Start-->
-            <div class="col-md-6 mt-3">
-                <label>Status</label>
-                <p-dropdown [options]="status" [(ngModel)]="status1" placeholder="Select a work type" optionLabel="name"
-                    [showClear]="true" id="status"></p-dropdown>
+            <div class="col-md-3 col-lg-6 col-xl-6 mt-3">
+              <label>Status <span class="text-danger">*</span></label>
+              <p-dropdown
+                [options]="workStatusList"
+                [(ngModel)]="defaultWorkStatus"
+                optionLabel="title"
+                optionValue="id"
+              ></p-dropdown>
             </div>
             <!--Status End-->
-        </div>
+          </div>
 
-
-        <!--Comments Starts-->
-        <div class="col-md-12 mt-3">
+          <!--Comments Starts-->
+          <div class="col-md-6 col-lg-12 col-xl-12 mt-3">
             <label>Comments</label>
-            <div class=" row">
-                <div class="col">
-                    <!-- <textarea type="text" rows="3" class="form-control"></textarea> -->
-                </div>
+            <div class="row">
+              <div class="col">
+                <textarea type="text" rows="3" [(ngModel)]="obj.comment" class="form-control"
+                  placeholder="Enter your comments"></textarea>
+              </div>
             </div>
+          </div>
+          <!--Comments End-->
         </div>
-        <!--Comments End-->
+        <div class="mx-3 mb-3 d-flex">
+
+          <div class="row">
+            <div class="col-12">
+              <p class="text-danger" *ngIf="showClientError">Please provide mandatory values</p>
+            </div>
+            <div class="col-12">
+
+               <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success"
+                 (click)="saveTimeSheet()"></button>
+               <!-- <p-messages [(value)]="msgs2" [enableService]="true"></p-messages> -->
+
+               <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger"></button>
+            </div>
+          </div>
 
 
+        </div>
     </div>
-    <div class="mx-3 mb-3 d-flex">
-        <!-- <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success"></button>
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger"></button> -->
-
-
-    </div>
+  </div>
 </div>

@@ -70,6 +70,14 @@ textarea {
 :host ::ng-deep .p-calendar {
     width: 100%;
 }
+/* :host ::ng-deep p-inputnumber .p-inputnumber {
+    width: 100%;
+} */
+
+
+.d-block {
+    width: 100%;
+}
 
 .day {
     position: absolute;

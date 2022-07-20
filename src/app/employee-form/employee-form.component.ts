@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 import { SelectItem } from 'primeng/api';
 import { SelectItemGroup } from 'primeng/api'
-
-
+import { Employee, EmployeeList } from 'src/model/employee-model';
+import { Project, ProjectList } from 'src/model/project-model';
+import { WorkType, WorkTypeList } from 'src/model/work-type-model';
+import { WorkStatus, WorkStatusList } from 'src/model/work-status-model';
+import { TimeSheet } from 'src/model/timesheet-model';
+import { TimeSheetService } from 'src/service/timesheet.service';
 interface Name {
   name: string,
 }
@@ -16,6 +20,19 @@ interface Name {
 })
 export class EmployeeFormComponent implements OnInit {
 
+  msgs1!: Message[];
+  msgs2!: Message[];
+  projectList = ProjectList
+  defaultProject = <Project>{};
+  employeeList = EmployeeList;
+  defaultEmployee = <Employee>{};
+  hoursSpent: number = 0;
+  timeSheetDate: Date = new Date();
+  workTypeList = WorkTypeList;
+  defaultWorType = <WorkType>{};
+  workStatusList = WorkStatusList;
+  defaultWorkStatus = <WorkStatus>{}
+  obj = <TimeSheet>{};
   employee!: Name[];
   project!: Name[];
   worktype!: Name[];
@@ -23,7 +40,7 @@ export class EmployeeFormComponent implements OnInit {
   employee1!: Name;
   project1!: Name;
   worktype1!: Name;
-  status1!: string;
+  status1!: Name;
   selectedCountry!: string;
   countries!: any[];
   groupedCities!: SelectItemGroup[];
@@ -32,6 +49,8 @@ export class EmployeeFormComponent implements OnInit {
   selectedItem2!: string;
   loading: boolean = false;
   loadLazyTimeout!: any;
+
+  showClientError: boolean = false;
 
   //DatePicker/Calender
   date1!: Date;
@@ -48,11 +67,12 @@ export class EmployeeFormComponent implements OnInit {
   date12!: Date;
   date14!: Date;
   dates!: Date[];
-
   rangeDates!: Date[];
   minDate!: Date;
   maxDate!: Date;
   invalidDates!: Array<Date>
+
+  timeSheetList : TimeSheet[] = [];
 
   ngOnInit() {
     let today = new Date();
@@ -72,6 +92,21 @@ export class EmployeeFormComponent implements OnInit {
     let invalidDate = new Date();
     invalidDate.setDate(today.getDate() - 1);
     this.invalidDates = [today, invalidDate];
+    this.defaultFormValues();
+    this._timeSheetService.setDefaultValue();
+    this.timeSheetList = this._timeSheetService.getTimeSheetList();
+    console.log(this._timeSheetService.getTimeSheetList())
+  }
+
+  defaultFormValues() {
+    this.defaultEmployee = this.employeeList[0]
+    this.defaultProject = this.projectList[0]
+    this.defaultWorType = this.workTypeList[0];
+    this.defaultWorkStatus = this.workStatusList[0];
+    this.obj.comment = "";
+    this.obj.houseSpent = 0;
+    this.obj.assignedTask = "";
+    this.obj.timeSheetDate = new Date();
   }
 
   //Date-to-Day
@@ -107,67 +142,12 @@ export class EmployeeFormComponent implements OnInit {
   // console: any.log(day);
 
 
-  constructor() {
+  constructor(private _timeSheetService: TimeSheetService) {
 
-
-    this.employee = [
-      { name: 'Awais Saleem' },
-      { name: 'Asghir Baig' },
-      { name: 'Usman Shami' },
-      { name: 'Qayyum Fridi' },
-      { name: 'Hassan-al-Badar' },
-      { name: 'Sajawal' },
-      { name: 'Waseem Mustafa' },
-      { name: 'Muhammad Imran' },
-      { name: 'Muhammad Tayyab' },
-      { name: 'Haseeb Khan' },
-      { name: 'Muhammad Waseem' },
-      { name: 'Nasir Ahmed' },
-      { name: 'Usman Baig' },
-      { name: 'Hammad Fazal' },
-      { name: 'Shavaiz Ashraf' }
-
-    ];
-
-    this.project = [
-      { name: 'Connect' },
-      { name: 'Citadel' },
-      { name: 'Family Thrift Center', },
-      { name: 'Shama Central' },
-      { name: 'Shama Jr.' },
-      { name: 'Shama English' },
-      { name: 'Zilon Operations' },
-      { name: 'Holidays' },
-      { name: 'Leave' },
-      { name: 'HR' },
-      { name: 'Meeting' },
-      { name: 'Zilon Social Media', }
-
-    ];
-
-    this.worktype = [
-      { name: 'QA & Testing' },
-      { name: 'Development' },
-      { name: 'Project Management' },
-      { name: 'Operaions' },
-      { name: 'Meeting' },
-      { name: 'Requirement' },
-      { name: 'Design' },
-      { name: 'Unit Test' },
-      { name: 'Support' },
-      { name: 'Assist' },
-      { name: 'Analysis' },
-      { name: 'Ideate' },
-      { name: 'Social Media Work' }
-    ];
-
-    this.status = [
-      { name: 'Complete' },
-      { name: 'On-Hold' },
-      { name: 'Work-in-Progress' },
-      { name: 'Delay' }
-    ]
-
+    let n = 1;
+    console.log(n++)
+    console.log(++n)
+    console.log(n)
 
     this.lazyItems = Array.from({ length: 100000 });
   }
@@ -191,5 +171,27 @@ export class EmployeeFormComponent implements OnInit {
       this.lazyItems = lazyItems;
       this.loading = false;
     }, Math.random() * 1000 + 250);
+  }
+
+  saveTimeSheet() {
+    this.showClientError = false;
+
+    if (this.obj.assignedTask != "" && (this.obj.houseSpent % 1 === 0) && (new Date(this.obj.timeSheetDate).toString() !== 'Invalid Date')) {
+      this.obj.id = this.timeSheetList.length + 1;
+      this.obj.employeeId = this.defaultEmployee.id;
+      this.obj.employeeName = this.defaultEmployee.title;
+      this.obj.projectId = this.defaultProject.id;
+      this.obj.projectName = this.defaultProject.title;
+      this.obj.workTypeId = this.defaultWorType.id;
+      this.obj.workTypeTitle = this.defaultWorType.title;
+      this.obj.statusId = this.defaultWorkStatus.id;
+      this.obj.status = this.defaultWorkStatus.title;
+      this._timeSheetService.saveTimeSheet(this.obj)
+    }
+    else {
+      this.showClientError = true;
+      // this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
+      this.msgs2 = [{ severity: 'error', summary: 'Error', detail: 'Message Content' }]
+    }
   }
 }
